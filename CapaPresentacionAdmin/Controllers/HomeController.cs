@@ -26,7 +26,7 @@ namespace CapaPresentacionAdmin.Controllers
             List<Usuario> oLista = new List<Usuario>();
             oLista = new CN_Usuarios().Listar(); // Devuelve todos los elementos de la consulta
 
-            return Json(oLista, JsonRequestBehavior.AllowGet);
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
     }
 }
