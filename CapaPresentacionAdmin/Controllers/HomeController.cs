@@ -28,5 +28,42 @@ namespace CapaPresentacionAdmin.Controllers
 
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
-    }
+
+
+        [HttpPost]
+        public JsonResult GuardarUsuario(Usuario Objeto)
+        {
+
+            object resultado;
+            string mensaje = string.Empty;
+
+            if (Objeto.IdUsuario == 0) // Por el valor del ID 
+            {
+
+                resultado = new CN_Usuarios().Registrar(Objeto, out mensaje);
+
+            }
+            else
+            {
+                resultado = new CN_Usuarios().Editar(Objeto, out mensaje);
+            }
+
+            return Json(new { resultado = resultado, mensaje = mensaje}, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public JsonResult EliminarUsuario(int id)
+        {
+            bool respuesta = false;
+            string mensaje = string.Empty;
+
+            respuesta = new CN_Usuarios().Eliminar(id, out mensaje);
+
+            return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        }
 }
