@@ -45,11 +45,28 @@ namespace CapaNegocio
             if (string.IsNullOrEmpty(Mensaje))
             {
 
-                string clave = "test123";
+                string clave = CN_Recursos.GenerarClave();
 
-                obj.Clave = CN_Recursos.ConvertirSha256(clave); // Encriptar la Clave
+                string asunto = "Bienvenido a la plataforma de Ventas";
+                string mensaje_correo = "<h3>Bienvenido a la plataforma de Ventas El Grillo</h3><br><p>Su clave de acceso es:  !clave! </p>";
+                mensaje_correo = mensaje_correo.Replace("!clave!", clave);
 
-                return objCapaDato.Registrar(obj, out Mensaje);
+                bool respuesta = CN_Recursos.EnviarCorreo(obj.Correo, asunto, mensaje_correo);
+
+                if (respuesta)
+                {
+                    obj.Clave = CN_Recursos.ConvertirSha256(clave); // Encriptar la Clave
+
+                    return objCapaDato.Registrar(obj, out Mensaje);
+
+                }
+                else
+                {
+                    Mensaje = "No se pudo Enviar el Correo";
+                    return 0;
+                }
+
+                
             }
             else
             {
