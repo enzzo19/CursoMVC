@@ -283,3 +283,24 @@ p.Precio, p.Stock, p.RutaImagen, p.NombreImagen, p.Activo
 from PRODUCTO p 
 inner join MARCA m on m.IdMarca = p.IdMarca
 inner join Categoria c on c.IdCategoria = p.IdCategoria;
+
+
+select * from producto
+
+
+-- Procedimiento Almacenado para Obtener el Total de Clientes, Ventas y Productos
+
+
+create procedure sp_Reporte_Dashboard
+as
+begin
+
+	select
+	(select count(*) from CLIENTE) [TotalCliente],
+
+	(select isnull(sum(cantidad), 0) from DETALLE_VENTA) [TotalVenta],
+
+	(select count(*) from PRODUCTO) [TotalProducto]
+end
+
+exec sp_Reporte_Dashboard

@@ -22,12 +22,13 @@ namespace CapaDatos
             try
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+
                 {
                     // Nuestra Consulta
-                    StringBuilder sb = new StringBuilder(Conexion.cn);
+                    StringBuilder sb = new StringBuilder();
                     sb.AppendLine("select p.IdProducto, p.Nombre, p.Descripcion,");
                     sb.AppendLine("m.IdMarca, m.Descripcion[DesMarca],");
-                    sb.AppendLine("c.IdCategoria, c.Descripcion[DesMarca],");
+                    sb.AppendLine("c.IdCategoria, c.Descripcion[DesCategoria],");
                     sb.AppendLine("p.Precio, p.Stock, p.RutaImagen, p.NombreImagen, p.Activo");
                     sb.AppendLine("from PRODUCTO p");
                     sb.AppendLine("inner join MARCA m on m.IdMarca = p.IdMarca");
@@ -60,7 +61,7 @@ namespace CapaDatos
                                     oCategoria = new Categoria()
                                     {
                                         IdCategoria = Convert.ToInt32(dr["IdCategoria"]),
-                                        Descripcion = dr["DesMarca"].ToString()
+                                        Descripcion = dr["DesCategoria"].ToString()
                                     },
                                     Precio = Convert.ToDecimal(dr["Precio"], new CultureInfo("es-AR")),
                                     Stock = Convert.ToInt32(dr["Stock"]),
@@ -165,7 +166,7 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    string query = "update producto set RutaImagen = @RutaImagen, NombreImagen =@NombreImagen where IdProducto = @idproducto"
+                    string query = "update producto set RutaImagen = @RutaImagen, NombreImagen =@NombreImagen where IdProducto = @idproducto";
                     
                         
                     SqlCommand cmd = new SqlCommand(query, oconexion); // llamando al procedimiento almacenado

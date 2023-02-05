@@ -457,6 +457,7 @@
     <Content Include="SQL_Scripts\Proccedure-DB.sql" />
     <Content Include="SQL_Scripts\SQLQuery-DBCARRITO.sql" />
     <Content Include="SQL_Scripts\SQLQuery-InsertDataDBCARRITO.sql" />
+    <Content Include="Utilidades\Estructura_ajax.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -491,6 +492,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="FOTOS_CARRITO\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
