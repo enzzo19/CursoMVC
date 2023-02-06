@@ -162,5 +162,59 @@ namespace CapaDatos
             return resultado;
         }
 
+        // Funcion para Cambiar Clave de un Registro
+        public bool CambiarClave(int idusuario, string nuevaclave, out string Mensaje)
+        {
+            bool resultado = false;
+            Mensaje = string.Empty;
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                {
+                    SqlCommand cmd = new SqlCommand("update usuario set clave = @nuevaclave, reestablecer = 0 where IdUsuario = @id", oconexion);
+
+                    cmd.Parameters.AddWithValue("@id", idusuario); // Parametro valor 
+                    cmd.Parameters.AddWithValue("@nuevaclave", nuevaclave); // Parametro valor 
+                    cmd.CommandType = CommandType.Text;
+                    oconexion.Open(); // abrimos la conexion
+                    resultado = cmd.ExecuteNonQuery() > 0 ? true : false; // si hay filas afectadas
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = false;
+                Mensaje = ex.Message;
+            }
+
+            return resultado;
+        }
+
+        // Funcion para Reestablecer Clave
+        public bool ReestablecerClave(int idusuario, string clave, out string Mensaje)
+        {
+            bool resultado = false;
+            Mensaje = string.Empty;
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                {
+                    SqlCommand cmd = new SqlCommand("update usuario set clave = @clave, reestablecer = 1 where IdUsuario = @id", oconexion);
+
+                    cmd.Parameters.AddWithValue("@id", idusuario); // Parametro valor 
+                    cmd.Parameters.AddWithValue("@clave", clave); // Parametro valor 
+                    cmd.CommandType = CommandType.Text;
+                    oconexion.Open(); // abrimos la conexion
+                    resultado = cmd.ExecuteNonQuery() > 0 ? true : false; // si hay filas afectadas
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = false;
+                Mensaje = ex.Message;
+            }
+
+            return resultado;
+        }
+
     }
 }
