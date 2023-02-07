@@ -151,11 +151,7 @@ namespace CapaNegocio
                 Mensaje = "No se pudo Reestablecer la Contraseña";
                 return false;
             }
-
-            
         }
-
-
 
     }
 }

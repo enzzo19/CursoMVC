@@ -326,3 +326,27 @@ begin
 		where convert(date, v.FechaVenta) between @fechainicio and @fechafin
 		and v.IdTransaccion = iif(@idtransaccion = '', v.IdTransaccion, @idtransaccion)
 end
+
+-- Procedimiento Almacenado para Registrar Cliente
+
+create procedure sp_RegistrarCliente(
+@Nombres varchar(100),
+@Apellidos varchar(100),
+@Correo varchar(100),
+@Clave varchar(100),
+@Mensaje varchar(500) output,
+@Resultado int output
+)
+as
+begin
+SET @Resultado = 0 
+	IF NOT EXISTS (SELECT * FROM CLIENTE WHERE Correo = @Correo) -- Que no se repita el cliente
+	begin
+		insert into CLIENTE(Nombres, Apellidos, Correo, Clave, Reestablecer) values
+		(@Nombres, @Apellidos, @Correo, @Clave, 0)
+
+		SET @Resultado = SCOPE_IDENTITY() -- Devuelve el nuevo ID y lo pone en reultado
+	end
+	else
+		set @Mensaje = 'El cliente ya existe'
+end
